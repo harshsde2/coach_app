@@ -46,3 +46,7 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# VS Code: keep shared launch configs only
+.vscode/*
+!.vscode/launch.json

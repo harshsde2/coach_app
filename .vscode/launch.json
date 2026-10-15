@@ -1,0 +1,36 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "FORM · dev (mock API)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "args": [
+        "--dart-define-from-file=config/env/dev.json",
+        "--dart-define-from-file=config/tenants/form.json"
+      ]
+    },
+    {
+      "name": "FORM · staging",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "args": [
+        "--dart-define-from-file=config/env/staging.json",
+        "--dart-define-from-file=config/tenants/form.json"
+      ]
+    },
+    {
+      "name": "FORM · prod",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "flutterMode": "release",
+      "args": [
+        "--dart-define-from-file=config/env/prod.json",
+        "--dart-define-from-file=config/tenants/form.json"
+      ]
+    }
+  ]
+}

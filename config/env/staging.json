@@ -1,0 +1,5 @@
+{
+  "APP_ENV": "staging",
+  "API_BASE_URL": "https://api-staging.fibodo.com",
+  "USE_MOCK_API": false
+}

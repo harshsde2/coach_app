@@ -1,0 +1,8 @@
+targets:
+  $default:
+    builders:
+      json_serializable:
+        options:
+          # Backend contract: confirm against the fibodo API docs.
+          field_rename: snake
+          explicit_to_json: true
