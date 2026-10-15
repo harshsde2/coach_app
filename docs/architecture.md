@@ -7,12 +7,12 @@ Platforms: iOS + Android. Backend: existing fibodo REST API.
 
 ## 1. Principles
 
-1. **Feature-first, layered inside each feature** — a feature can be read, tested and deleted in isolation.
-2. **Dependencies point inward** — `presentation → domain ← data`. Domain has no Flutter, Dio or JSON imports.
-3. **Nothing brand-specific is hardcoded** — colours, logo, name and copy come from `TenantConfig` + theme.
-4. **Errors are values, not surprises** — repositories return `Result<T>`; the UI never sees a `DioException`.
-5. **Immutable state, generated boilerplate** — freezed models, Riverpod code generation.
-6. **Every string through l10n, every size through tokens.**
+1. **Feature-first, layered inside each feature.** A feature can be read, tested and removed on its own.
+2. **Dependencies point inward:** `presentation → domain ← data`. Domain code has no Dio, JSON or Flutter imports.
+3. **Nothing brand-specific is hardcoded.** Name, colours and copy come from `TenantConfig`, the theme and l10n.
+4. **Errors are values.** Repositories return `Result<T>`; the UI never sees a `DioException`.
+5. **Write once, use anywhere.** Design tokens and shared widgets live in `core/` and features compose them.
+6. **Every string goes through l10n, and every colour or size through a token.**
 
 ---
 
@@ -20,39 +20,36 @@ Platforms: iOS + Android. Backend: existing fibodo REST API.
 
 | Concern | Choice | Why |
 |---|---|---|
-| State management + DI | `flutter_riverpod` + `riverpod_generator` | Compile-safe DI, async state built in, easy overrides in tests |
-| Navigation | `go_router` (+ `StatefulShellRoute` for tabs) | Declarative, deep links, auth redirect guard, per-tab back stacks |
-| HTTP | `dio` | Interceptors (auth, refresh, logging), cancellation, multipart |
-| Models | `freezed` + `json_serializable` | Immutable, `copyWith`, unions, JSON mapping |
-| Secure storage | `flutter_secure_storage` | Tokens in Keychain / Keystore |
-| Preferences | `shared_preferences` | Non-sensitive flags |
-| Localisation | `flutter_localizations` + `gen-l10n` (ARB) | Official, type-safe strings |
-| Fonts | Bundled Manrope + DM Sans | No runtime download, works offline |
-| Images / SVG | `cached_network_image`, `flutter_svg` | |
-| Logging | `logger` (dev only output) | |
-| Lints | `very_good_analysis` | Strict, industry standard |
+| State management + DI | `flutter_riverpod` 3 + `riverpod_generator` | Compile-safe DI, async state built in, provider overrides for tests |
+| Navigation | `go_router` (`StatefulShellRoute` for tabs) | Declarative, deep links, auth redirect guard, per-tab back stacks |
+| HTTP | `dio` | Interceptors (auth, refresh, logging), cancellation |
+| Models | `freezed` + `json_serializable` | Immutable models, `copyWith`, JSON mapping |
+| Secure storage | `flutter_secure_storage` | Tokens and cached user in Keychain / Keystore |
+| Localisation | `flutter_localizations` + `gen-l10n` (ARB) | Official and type-safe |
+| Fonts | Bundled Manrope + DM Sans | No runtime download; works offline |
+| Lints | `very_good_analysis` | Strict, industry-standard rules |
 | Testing | `flutter_test`, `mocktail` | |
-| Real-time chat | TBD (WebSocket / provider) — behind `ChatRepository` interface | |
-| Payments | TBD — behind `PaymentRepository` interface | |
+
+Chat and payments are still to be decided. Each will sit behind a repository interface so the provider can change without touching the UI.
 
 ---
 
 ## 3. Layers
 
 ```
-presentation   Screens, widgets, Riverpod notifiers (UI state)
+presentation   Screens, widgets, Riverpod controllers (UI state)
      │ calls
      ▼
-domain         Entities, repository interfaces (abstract), use-case logic if non-trivial
+domain         Entities + repository interfaces (pure Dart)
      ▲ implements
      │
-data           DTOs (JSON), remote/local data sources, repository implementations, mappers
+data           DTOs, remote/local data sources, repository implementations
 ```
 
-- **Screen** → reads a **Notifier** via `ref.watch`, sends user intent via `ref.read(...notifier).method()`.
-- **Notifier** → calls a **Repository** (interface from domain), maps `Result` to UI state.
-- **Repository impl** → calls **DataSource** (Dio), maps **DTO → Entity**, maps exceptions → `Failure`.
-- Use-case classes are added only where logic spans several repositories (e.g. checkout) — no empty pass-through use cases.
+- A **screen** reads a controller with `ref.watch` and sends user intent with `ref.read(provider.notifier).method()`.
+- A **controller** calls a **repository** (the domain interface) and turns the `Result` into UI state.
+- A **repository implementation** calls **data sources**, maps **DTO → entity**, and maps exceptions to `Failure` through `safeApiCall`.
+- Use-case classes are added only when logic spans several repositories (for example checkout). There are no empty pass-through use cases.
 
 ---
 
@@ -60,78 +57,48 @@ data           DTOs (JSON), remote/local data sources, repository implementation
 
 ```
 coach_app/
-├── assets/
-│   ├── fonts/                     Manrope, DM Sans
-│   ├── icons/                     SVG icons
-│   └── tenants/
-│       └── form/                  logo, headshot, app icon source per tenant
+├── assets/fonts/                  Manrope, DM Sans (+ OFL licence)
 ├── config/
-│   ├── env/                       dev.json, staging.json, prod.json   (--dart-define-from-file)
-│   └── tenants/                   form.json  (name, colours, assets path, support phone…)
-├── docs/                          requirements.md, architecture.md
-├── l10n.yaml
+│   ├── env/                       dev.json · staging.json · prod.json
+│   └── tenants/                   form.json  (name, tagline, brand colours)
+├── docs/                          requirements.md · architecture.md
 ├── lib/
-│   ├── main.dart                  Bootstrap: load config, ProviderScope, runApp
-│   ├── app.dart                   MaterialApp.router: theme, router, localisation
-│   │
-│   ├── core/                      App-wide, feature-agnostic
+│   ├── main.dart                  Error hooks, ProviderScope, runApp
+│   ├── app.dart                   MaterialApp.router: theme, router, l10n
+│   ├── core/
 │   │   ├── config/                AppConfig (env), TenantConfig (brand)
-│   │   ├── constants/             durations, regex, storage keys
-│   │   ├── error/                 AppException, Failure (sealed), error → message mapping
+│   │   ├── constants/             durations, storage keys, platform name
+│   │   ├── error/                 Failure (sealed) + localised messages
+│   │   ├── logging/               AppLogger facade
 │   │   ├── network/
-│   │   │   ├── api_client.dart    Dio factory (base URL, timeouts, headers)
+│   │   │   ├── api_client.dart          Dio provider
 │   │   │   ├── api_endpoints.dart
-│   │   │   └── interceptors/      auth_interceptor, refresh_token_interceptor, logging_interceptor
-│   │   ├── storage/               SecureStorage, PreferencesStorage wrappers
-│   │   ├── router/
-│   │   │   ├── app_router.dart    GoRouter + auth redirect
-│   │   │   └── app_routes.dart    route paths/names in one place
-│   │   ├── theme/
-│   │   │   ├── app_colors.dart    ThemeExtension built from TenantConfig
-│   │   │   ├── app_typography.dart
-│   │   │   ├── app_spacing.dart   spacing + radius tokens
-│   │   │   └── app_theme.dart     ThemeData assembly
-│   │   ├── utils/
-│   │   │   ├── result.dart        sealed Result<T> = Success | Error
-│   │   │   ├── validators.dart
-│   │   │   └── extensions/        context (theme, l10n), string, datetime
-│   │   └── widgets/               Design-system components (no feature logic)
-│   │       ├── buttons/           AppPrimaryButton, AppOutlineButton, AppTextButton
-│   │       ├── inputs/            AppTextField, AppPasswordField, AppOtpField
-│   │       ├── feedback/          AppLoader, AppEmptyState, AppErrorView, AppToast
-│   │       └── layout/            AppScaffold, SectionHeading (eyebrow + title), AppCard
-│   │
+│   │   │   ├── api_error_mapper.dart    DioException → Failure
+│   │   │   ├── safe_api_call.dart       try/catch → Result, in one place
+│   │   │   ├── session_events.dart      "session expired" broadcast
+│   │   │   ├── token_refresh_client.dart
+│   │   │   └── interceptors/            auth (+ refresh), logging
+│   │   ├── router/                app_router (guard), app_routes, tab shell
+│   │   ├── storage/               secure storage, TokenStorage
+│   │   ├── theme/                 palette → AppColors / AppTextStyles → ThemeData
+│   │   ├── utils/                 Result, validators, context extensions
+│   │   └── widgets/               design system (import widgets.dart)
+│   │       ├── buttons/           AppButton.primary / .outline / .text
+│   │       ├── inputs/            AppTextField, AppPasswordField, AppCheckboxField
+│   │       ├── display/           BrandMark, AppAvatar, Eyebrow, IconChip, AppBadge
+│   │       ├── feedback/          AppLoader, AppEmptyState, toasts, confirm dialog
+│   │       ├── layout/            AppScaffold, AppTabPage, SectionHeading, AppCard
+│   │       └── navigation/        AppBottomNavBar
 │   ├── features/
 │   │   ├── auth/
-│   │   │   ├── data/
-│   │   │   │   ├── datasources/   auth_remote_data_source.dart, auth_local_data_source.dart
-│   │   │   │   ├── models/        login_request.dart, auth_response_dto.dart, user_dto.dart
-│   │   │   │   └── repositories/  auth_repository_impl.dart
-│   │   │   ├── domain/
-│   │   │   │   ├── entities/      user.dart, auth_session.dart
-│   │   │   │   └── repositories/  auth_repository.dart   (abstract)
-│   │   │   └── presentation/
-│   │   │       ├── providers/     auth_controller.dart (session state), login_controller.dart …
-│   │   │       ├── screens/       login_screen.dart, signup_screen.dart, forgot_password_screen.dart
-│   │   │       └── widgets/       auth_header.dart, …
-│   │   ├── home/
-│   │   ├── bookings/
-│   │   ├── checkout/              shared 4-step flow (booking / voucher / membership)
-│   │   ├── shop/
-│   │   ├── training/
-│   │   ├── content/
-│   │   ├── messaging/
-│   │   ├── contacts/
-│   │   ├── profile/
-│   │   ├── wallet/
-│   │   └── business/              about, reviews, news
-│   │
+│   │   │   ├── domain/            User entity, AuthRepository interface
+│   │   │   ├── data/              DTOs, API + mock + local data sources, repo impl
+│   │   │   └── presentation/      controllers, screens, widgets
+│   │   ├── home/  wallet/  messages/  contacts/  profile/
+│   │   │   └── presentation/screens/
+│   │   └── …                      (bookings, checkout, shop, training, content …)
 │   └── l10n/                      app_en.arb (+ generated)
-│
-└── test/                          mirrors lib/
-    ├── core/
-    ├── features/auth/{data,presentation}/
-    └── helpers/                   fakes, pump helpers, provider overrides
+└── test/                          mirrors lib/ + helpers/ + app/ (full-flow test)
 ```
 
 ---
@@ -146,63 +113,70 @@ flutter run \
   --dart-define-from-file=config/tenants/form.json
 ```
 
-- `AppConfig` — base URL, log level, env name.
-- `TenantConfig` — tenant id, display name, brand colours, asset folder, support contact.
-- The tenant id is sent to the API (header) if the backend is multi-tenant.
-- Native per-tenant values (bundle id, app name, icon, splash) are produced by a rebrand script
-  in CI (`flutter_launcher_icons`, `flutter_native_splash`). Environments use native flavors
-  (`dev`, `staging`, `prod`) so they can be installed side by side.
+- `AppConfig` holds the environment, API base URL and `USE_MOCK_API`.
+- `TenantConfig` holds the tenant id, name, tagline and brand colours. Each request carries the tenant id in the `X-Tenant-Id` header; the header name is still to be confirmed with the backend.
+- **Not built yet:** native flavors so dev, staging and prod can be installed side by side, and a CI rebrand step for per-tenant bundle id, app name, icon and splash (`flutter_launcher_icons`, `flutter_native_splash`).
 
 ### 5.2 Theming
 
-`TenantConfig` → `AppColors` (ThemeExtension) → `ThemeData`.
-Widgets read `context.colors.brand`, `context.text.sectionTitle`, `AppSpacing.md` —
-no `Color(0xFF…)` or magic numbers in features.
-
-### 5.3 Networking & errors
-
 ```
-Dio ─ AuthInterceptor (adds Bearer token, tenant header)
-    ─ RefreshTokenInterceptor (on 401: refresh once, queue concurrent requests, retry; else logout)
-    ─ LoggingInterceptor (dev only, redacts secrets)
-
-DataSource throws AppException  →  RepositoryImpl catches  →  Result.error(Failure)
-                                                           →  Result.success(Entity)
+TenantConfig ─┐
+AppPalette ───┴→ AppColors.dark / .light ─→ AppTextStyles.from(colors) ─→ ThemeData
+                       (ThemeExtension)          (ThemeExtension)
 ```
 
-`Failure` is a sealed class (`NetworkFailure`, `UnauthorizedFailure`, `ValidationFailure(fieldErrors)`,
-`ServerFailure`, `UnknownFailure`) so the UI uses an exhaustive `switch`.
+- Widgets read `context.colors.brand`, `context.textStyles.title`, `AppSpacing.md`, `AppRadius.card`.
+- Material widgets (TextField, Checkbox, SnackBar, Dialog) are themed centrally, so they match the design even when used directly.
+- Light and dark themes are both supported. Dark is the default.
 
-### 5.4 Auth & routing
+### 5.3 Networking and errors
 
-- `AuthController` (keepAlive) holds `AuthState`: `unknown → authenticated(user) | unauthenticated`.
-- On launch: read token from secure storage → fetch current user → set state.
-- `GoRouter.redirect` listens to `AuthController`: unauthenticated users are sent to `/login`;
-  authenticated users can't open auth routes.
-- Tabs use `StatefulShellRoute.indexedStack` so each tab keeps its own back stack.
+```
+Dio ─ AuthInterceptor  adds the Bearer token; on 401 refreshes once,
+                       serialises concurrent 401s and retries; otherwise emits
+                       SessionEvents.expired → AuthController logs out
+    ─ LoggingInterceptor (non-prod; method, URL and status only, never bodies)
 
-### 5.5 UI state
+data source throws ─→ safeApiCall ─→ Ok(value) | Err(Failure)
+```
 
-Screen-level async data: `AsyncValue<T>` from `@riverpod` providers → `.when(data, loading, error)`.
-Form screens: freezed state (`isSubmitting`, `fieldErrors`) in a Notifier; one-off events
-(toast, navigate) via `ref.listen`.
+`Failure` is a sealed class (`NetworkFailure`, `UnauthorizedFailure`, `ValidationFailure`,
+`ServerFailure`, `UnknownFailure`), so presentation code handles it with an exhaustive `switch`.
+
+### 5.4 Auth and routing
+
+- `AuthController` (keepAlive) holds an `AsyncValue<User?>`: *loading* means the session is being restored, *data(user)* means signed in, and *data(null)* means signed out.
+- On restore, the tokens are read and then the cached user is used. This makes startup instant and works offline. If no user is cached, the app falls back to `GET /me`.
+- `GoRouter.redirect` runs `authGuard`. Signed-out users can only reach `/login/*`. Signed-in users never see the auth screens. While the session is restoring, the app shows `/splash`.
+- Screens never navigate after login or logout themselves. Changing the auth state is enough, because the router reacts to it.
+- Tabs use `StatefulShellRoute.indexedStack`, so each tab keeps its own back stack.
+
+### 5.5 Mock API
+
+With `USE_MOCK_API=true` (dev), `AuthMockDataSource` replaces the HTTP data source. It uses the same interface and simulates latency and errors:
+`wrong@example.com` → login error, `taken@example.com` → sign-up error, reset code `123456`.
+
+### 5.6 UI state
+
+- **Form submission:** an `AsyncNotifier<void>` (idle, loading or error). The screen listens with `ref.listen` and shows `state.showErrorToast(context)`.
+- **Multi-step flows:** a freezed state with a `step` enum (`ForgotPasswordController`).
+- After every `await`, controllers check `ref.mounted` before updating state.
 
 ---
 
 ## 6. Conventions
 
-- Files `snake_case.dart`, one public widget/class per file, widgets split past ~100 lines.
-- `const` constructors everywhere possible.
-- No business logic in widgets; no `BuildContext` in notifiers/repositories.
-- Commits: Conventional Commits (`feat(auth): add login screen`).
-- Generated files (`*.g.dart`, `*.freezed.dart`) are committed so reviewers can run without build_runner.
-- CI: `dart format --set-exit-if-changed`, `flutter analyze`, `flutter test`.
+- Files use `snake_case.dart`. Each file has one public widget. Widgets are split once they pass about 100 lines.
+- Use `const` constructors wherever possible. No business logic in widgets and no `BuildContext` below the presentation layer.
+- Generated files (`*.g.dart`, `*.freezed.dart`, l10n) are committed, so the project runs without build_runner.
+- Commits follow Conventional Commits (`feat(auth): …`).
+- Before each push: `dart format .`, `flutter analyze` and `flutter test`.
 
-## 7. Testing strategy
+## 7. Testing
 
-| Layer | What |
+| Level | Covered |
 |---|---|
-| Repository | DTO mapping, exception → Failure mapping (mocked data source) |
-| Notifier | State transitions (mocked repository via provider override) |
-| Widget | Auth screens: validation messages, loading state, navigation on success |
-| Core | Validators, Result, refresh-token interceptor |
+| Unit | Validators, route guard, repository (DTO mapping, error mapping, session restore, logout) |
+| Controller | `LoginController` success and failure, using a `ProviderContainer` with overrides |
+| Widget | Login form validation and submission |
+| App flow | Full app: login → tabs → profile → logout, with the mock API and in-memory secure storage |
