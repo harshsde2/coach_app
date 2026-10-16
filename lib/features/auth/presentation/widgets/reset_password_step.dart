@@ -4,7 +4,6 @@ import 'package:coach_app/core/utils/validators.dart';
 import 'package:coach_app/core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
-/// Step 3 of password reset: choose and confirm a new password.
 class ResetPasswordStep extends StatefulWidget {
   const ResetPasswordStep({
     required this.isSubmitting,

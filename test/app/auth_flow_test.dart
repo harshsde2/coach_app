@@ -31,7 +31,6 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // No stored session → login.
     expect(find.byType(LoginScreen), findsOneWidget);
 
     Finder field(String label) => find.descendant(
@@ -43,7 +42,6 @@ void main() {
     await tester.tap(find.text(l10n.loginButton));
     await tester.pumpAndSettle();
 
-    // Signed in → bottom tabs, Home first.
     expect(find.byType(HomeScreen), findsOneWidget);
     expect(find.byType(AppBottomNavBar), findsOneWidget);
     expect(storage.values, isNotEmpty);
@@ -55,7 +53,6 @@ void main() {
 
     await tester.tap(find.text(l10n.logoutButton));
     await tester.pumpAndSettle();
-    // Confirm dialog → confirm.
     await tester.tap(find.text(l10n.logoutButton).last);
     await tester.pumpAndSettle();
 

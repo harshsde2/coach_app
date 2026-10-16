@@ -1,11 +1,6 @@
 import 'package:coach_app/l10n/app_localizations.dart';
 import 'package:flutter/widgets.dart';
 
-/// Reusable form validators returning localised messages.
-///
-/// ```dart
-/// AppTextField(validator: Validators.email(context.l10n));
-/// ```
 abstract final class Validators {
   static const minPasswordLength = 8;
   static const otpLength = 6;

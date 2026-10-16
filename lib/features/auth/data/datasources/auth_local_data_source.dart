@@ -8,8 +8,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auth_local_data_source.g.dart';
 
-/// Caches the signed-in user so the app opens instantly (and offline)
-/// without waiting for the network.
 class AuthLocalDataSource {
   const AuthLocalDataSource(this._storage);
 

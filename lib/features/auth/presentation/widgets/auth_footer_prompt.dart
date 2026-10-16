@@ -2,7 +2,6 @@ import 'package:coach_app/core/utils/extensions/context_extensions.dart';
 import 'package:coach_app/core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
-/// "New to FORM? Create an account" style line at the bottom of auth forms.
 class AuthFooterPrompt extends StatelessWidget {
   const AuthFooterPrompt({
     required this.prompt,

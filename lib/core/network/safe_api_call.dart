@@ -4,10 +4,6 @@ import 'package:coach_app/core/network/api_error_mapper.dart';
 import 'package:coach_app/core/utils/result.dart';
 import 'package:dio/dio.dart';
 
-/// Runs [call] and converts every thrown error into an [Err].
-///
-/// The single place where exceptions become values: repositories wrap
-/// their data-source calls with this instead of writing try/catch blocks.
 Future<Result<T>> safeApiCall<T>(Future<T> Function() call) async {
   try {
     return Ok(await call());

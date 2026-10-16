@@ -21,7 +21,6 @@ void main() {
     container = ProviderContainer.test(
       overrides: [authRepositoryProvider.overrideWithValue(repository)],
     );
-    // Session restored → signed out.
     await container.read(authControllerProvider.future);
     container.listen(loginControllerProvider, (_, _) {});
   });

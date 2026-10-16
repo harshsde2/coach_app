@@ -1,11 +1,8 @@
 import 'dart:ui';
 
-/// Raw neutral colour values from the design.
-///
 /// Do not use these in widgets: use the semantic `context.colors` instead,
 /// which resolves the right value for the current brightness and tenant.
 abstract final class AppPalette {
-  // Dark
   static const ink = Color(0xFF090B0B);
   static const panel = Color(0xFF121515);
   static const panelRaised = Color(0xFF191D1C);
@@ -16,7 +13,6 @@ abstract final class AppPalette {
   static const avatarOnDark = Color(0xFF27302D);
   static const navOnDark = Color(0xF00C0E0E);
 
-  // Light
   static const paper = Color(0xFFF3F5F2);
   static const white = Color(0xFFFFFFFF);
   static const paperRaised = Color(0xFFF8FAF7);
@@ -27,7 +23,6 @@ abstract final class AppPalette {
   static const avatarOnLight = Color(0xFFE9EEE9);
   static const navOnLight = Color(0xF0FFFFFF);
 
-  // Status
   static const error = Color(0xFFE27676);
   static const success = Color(0xFF5FCB8A);
   static const warning = Color(0xFFFFD967);

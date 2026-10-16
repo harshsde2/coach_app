@@ -8,14 +8,9 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auth_controller.g.dart';
 
-/// Source of truth for "who is signed in".
-///
-/// * loading → session is being restored (splash screen)
-/// * data(User) → signed in
-/// * data(null) → signed out
-///
-/// The router listens to this provider to guard routes, so signing in or
-/// out anywhere automatically moves the user to the right screen.
+/// loading = restoring the session, data(user) = signed in,
+/// data(null) = signed out. The router guards routes from this state, so
+/// updating it is all that signing in or out needs to do.
 @Riverpod(keepAlive: true)
 class AuthController extends _$AuthController {
   @override
@@ -33,7 +28,6 @@ class AuthController extends _$AuthController {
     };
   }
 
-  /// Called by the login / sign-up flows once a session has been created.
   void signedIn(User user) => state = AsyncData(user);
 
   Future<void> logout() async {
@@ -42,6 +36,5 @@ class AuthController extends _$AuthController {
   }
 }
 
-/// The signed-in user, or `null` when signed out or still loading.
 @riverpod
 User? currentUser(Ref ref) => ref.watch(authControllerProvider).value;

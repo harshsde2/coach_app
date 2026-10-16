@@ -74,7 +74,6 @@ GoRouter appRouter(Ref ref) {
   return router;
 }
 
-/// Decides where a user may be, based on the session.
 @visibleForTesting
 String? authGuard(AsyncValue<User?> auth, String location) =>
     _guard(auth, location);
@@ -97,5 +96,4 @@ StatefulShellBranch _tab(String path, Widget screen) => StatefulShellBranch(
   routes: [GoRoute(path: path, builder: (context, state) => screen)],
 );
 
-/// Nested GoRoutes take the last path segment, e.g. `sign-up`.
 String _child(String fullPath) => fullPath.split('/').last;

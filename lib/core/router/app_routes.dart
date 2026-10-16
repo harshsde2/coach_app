@@ -1,4 +1,3 @@
-/// Every route path in one place. Navigate with `context.go(AppRoutes.home)`.
 abstract final class AppRoutes {
   static const splash = '/splash';
 
@@ -7,7 +6,6 @@ abstract final class AppRoutes {
   static const signUp = '/login/sign-up';
   static const forgotPassword = '/login/forgot-password';
 
-  // Bottom tabs
   static const home = '/home';
   static const wallet = '/wallet';
   static const messages = '/messages';

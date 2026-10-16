@@ -1,10 +1,6 @@
 import 'package:coach_app/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 
-/// Standard screen frame: safe area, screen padding, optional scrolling,
-/// tap-outside-to-dismiss-keyboard, and a back button when the route can pop.
-///
-/// Use [maxContentWidth] for forms so they stay readable on tablets.
 class AppScaffold extends StatelessWidget {
   const AppScaffold({
     required this.body,

@@ -8,11 +8,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_theme.g.dart';
 
-/// Builds [ThemeData] from the design tokens.
-///
-/// Material widgets (TextField, SnackBar, Dialog…) are themed here so they
-/// match the design even when used directly; custom tokens are attached as
-/// [ThemeExtension]s for our own components.
 abstract final class AppTheme {
   static ThemeData dark(TenantConfig tenant) =>
       _build(AppColors.dark(tenant), Brightness.dark);
@@ -134,12 +129,12 @@ abstract final class AppTheme {
   }
 }
 
-/// Current theme mode. Dark by default, matching the FORM design.
 @Riverpod(keepAlive: true)
 class ThemeModeController extends _$ThemeModeController {
   @override
   ThemeMode build() => ThemeMode.dark;
 
-  // ignore: use_setters_to_change_properties, notifier API reads better.
-  void set(ThemeMode mode) => state = mode;
+  ThemeMode get mode => state;
+
+  set mode(ThemeMode value) => state = value;
 }

@@ -2,8 +2,6 @@ import 'package:coach_app/core/error/failure.dart';
 import 'package:coach_app/l10n/app_localizations.dart';
 
 extension FailureMessage on Failure {
-  /// A message safe to show to the user.
-  ///
   /// Prefers the server's message for validation errors (e.g. "Email already
   /// registered"); otherwise uses a localised generic message.
   String localizedMessage(AppLocalizations l10n) {

@@ -16,7 +16,6 @@ class AppNavItem {
   final String label;
 }
 
-/// Frosted bottom tab bar with a brand indicator on the active tab.
 class AppBottomNavBar extends StatelessWidget {
   const AppBottomNavBar({
     required this.items,

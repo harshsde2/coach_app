@@ -4,15 +4,6 @@ import 'package:flutter/material.dart';
 
 enum AppButtonVariant { primary, outline, text }
 
-/// The app's single button component.
-///
-/// ```dart
-/// AppButton.primary(label: l10n.loginButton, onPressed: submit)
-/// AppButton.outline(label: l10n.logoutButton, icon: Icons.logout, …)
-/// AppButton.text(label: l10n.forgotPasswordLink, onPressed: …)
-/// ```
-///
-/// Passing `onPressed: null` renders the disabled state.
 class AppButton extends StatelessWidget {
   const AppButton.primary({
     required this.label,
@@ -45,13 +36,10 @@ class AppButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final AppButtonVariant variant;
 
-  /// Optional trailing icon.
   final IconData? icon;
 
-  /// Shows a spinner and blocks taps, keeping the button's size.
   final bool isLoading;
 
-  /// Fill the available width.
   final bool expanded;
 
   bool get _isEnabled => onPressed != null && !isLoading;

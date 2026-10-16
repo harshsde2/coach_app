@@ -3,8 +3,6 @@ import 'package:coach_app/core/utils/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-/// Labelled text input with validation, following the design's
-/// "label above field" pattern.
 class AppTextField extends StatelessWidget {
   const AppTextField({
     required this.label,

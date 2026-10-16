@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 
-/// Spacing scale (4pt grid). Use for padding, margins and gaps.
 abstract final class AppSpacing {
   static const double xxs = 4;
   static const double xs = 8;
@@ -11,13 +10,11 @@ abstract final class AppSpacing {
   static const double xxl = 32;
   static const double xxxl = 48;
 
-  /// Horizontal padding for screen content.
   static const double screen = lg;
 
   static const screenPadding = EdgeInsets.symmetric(horizontal: screen);
 }
 
-/// Corner radius scale.
 abstract final class AppRadius {
   static const double xs = 6;
   static const double sm = 10;
@@ -32,7 +29,6 @@ abstract final class AppRadius {
   static const badge = BorderRadius.all(Radius.circular(xs));
 }
 
-/// Fixed component dimensions.
 abstract final class AppSizes {
   static const double buttonHeight = 52;
   static const double buttonHeightSmall = 40;
@@ -45,6 +41,5 @@ abstract final class AppSizes {
   static const double avatarLg = 82;
   static const double brandMark = 34;
 
-  /// Max width for form content so it doesn't stretch on tablets.
   static const double formMaxWidth = 460;
 }

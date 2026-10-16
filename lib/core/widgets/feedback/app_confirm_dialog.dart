@@ -3,7 +3,6 @@ import 'package:coach_app/core/utils/extensions/context_extensions.dart';
 import 'package:coach_app/core/widgets/buttons/app_button.dart';
 import 'package:flutter/material.dart';
 
-/// Asks the user to confirm an action. Resolves to `true` when confirmed.
 Future<bool> showAppConfirmDialog(
   BuildContext context, {
   required String title,

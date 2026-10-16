@@ -6,7 +6,6 @@ import 'package:coach_app/features/auth/data/models/auth_response_dto.dart';
 import 'package:coach_app/features/auth/data/models/user_dto.dart';
 import 'package:dio/dio.dart';
 
-/// [AuthRemoteDataSource] backed by the fibodo REST API.
 class AuthApiDataSource implements AuthRemoteDataSource {
   const AuthApiDataSource(this._dio);
 

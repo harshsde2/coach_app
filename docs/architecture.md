@@ -167,6 +167,7 @@ With `USE_MOCK_API=true` (dev), `AuthMockDataSource` replaces the HTTP data sour
 ## 6. Conventions
 
 - Files use `snake_case.dart`. Each file has one public widget. Widgets are split once they pass about 100 lines.
+- **Comments explain *why*, never *what*.** Only write a comment for a non-obvious reason, contract or gotcha, or for a `TODO(team)`. Don't restate names or narrate code. See `CLAUDE.md` for the full rule.
 - Use `const` constructors wherever possible. No business logic in widgets and no `BuildContext` below the presentation layer.
 - Generated files (`*.g.dart`, `*.freezed.dart`, l10n) are committed, so the project runs without build_runner.
 - Commits follow Conventional Commits (`feat(auth): …`).

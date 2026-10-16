@@ -1,7 +1,6 @@
 import 'package:coach_app/core/theme/app_spacing.dart';
 import 'package:flutter/material.dart';
 
-/// Centred brand-coloured progress indicator.
 class AppLoader extends StatelessWidget {
   const AppLoader({this.size = AppSizes.iconLg, super.key});
 

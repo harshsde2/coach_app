@@ -4,7 +4,6 @@ import 'package:coach_app/core/utils/validators.dart';
 import 'package:coach_app/core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
-/// Step 1 of password reset: collect the account email.
 class ResetEmailStep extends StatefulWidget {
   const ResetEmailStep({
     required this.initialEmail,

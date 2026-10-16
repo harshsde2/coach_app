@@ -1,19 +1,12 @@
 import 'package:coach_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
-/// Font families bundled in `assets/fonts` (see pubspec.yaml).
 abstract final class AppFonts {
-  /// Headings: bold, tight tracking.
   static const heading = 'Manrope';
 
-  /// Body copy, labels, buttons.
   static const body = 'DMSans';
 }
 
-/// Semantic text styles. Access with `context.textStyles`.
-///
-/// Named by role, not size, so screens describe intent ("title") and the
-/// design can be retuned here without touching any feature code.
 @immutable
 class AppTextStyles extends ThemeExtension<AppTextStyles> {
   const AppTextStyles({
@@ -87,10 +80,8 @@ class AppTextStyles extends ThemeExtension<AppTextStyles> {
   final TextStyle bodyLarge;
   final TextStyle body;
 
-  /// Captions and helper text (secondary colour).
   final TextStyle bodySmall;
 
-  /// Form field labels.
   final TextStyle label;
   final TextStyle button;
 
@@ -98,7 +89,6 @@ class AppTextStyles extends ThemeExtension<AppTextStyles> {
   /// the `Eyebrow` widget.
   final TextStyle eyebrow;
 
-  /// Pills and status chips on brand colour.
   final TextStyle badge;
 
   @override

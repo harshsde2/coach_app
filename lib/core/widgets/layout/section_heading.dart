@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 
 enum SectionHeadingSize { page, section }
 
-/// Eyebrow + title pair used to open every screen and section.
-///
 /// `page` uses the large headline (standalone screens like auth),
 /// `section` the standard title (tab screens and sections).
 class SectionHeading extends StatelessWidget {

@@ -4,8 +4,6 @@ part 'app_config.g.dart';
 
 enum AppEnvironment { dev, staging, prod }
 
-/// Build-time environment settings.
-///
 /// Values come from `--dart-define-from-file=config/env/<env>.json`.
 /// Defaults allow a plain `flutter run` to start in dev with the mock API.
 class AppConfig {
@@ -34,8 +32,6 @@ class AppConfig {
   final AppEnvironment environment;
   final String apiBaseUrl;
 
-  /// When true, data sources return local fake data instead of calling the
-  /// API. Lets UI work continue independently of backend availability.
   final bool useMockApi;
 
   bool get isProd => environment == AppEnvironment.prod;

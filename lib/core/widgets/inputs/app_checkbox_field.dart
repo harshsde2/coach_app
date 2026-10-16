@@ -2,8 +2,6 @@ import 'package:coach_app/core/theme/app_spacing.dart';
 import 'package:coach_app/core/utils/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 
-/// Checkbox with a label that takes part in [Form] validation,
-/// e.g. accepting terms.
 class AppCheckboxField extends FormField<bool> {
   AppCheckboxField({
     required String label,

@@ -2,9 +2,6 @@ import 'package:coach_app/core/config/tenant_config.dart';
 import 'package:coach_app/core/theme/app_palette.dart';
 import 'package:flutter/material.dart';
 
-/// Semantic colour tokens. Access with `context.colors`.
-///
-/// Neutrals depend on brightness; brand colours come from the tenant.
 @immutable
 class AppColors extends ThemeExtension<AppColors> {
   const AppColors({
@@ -64,16 +61,13 @@ class AppColors extends ThemeExtension<AppColors> {
     warning: AppPalette.warning,
   );
 
-  /// Screen background.
   final Color background;
 
-  /// Cards, inputs, sheets.
   final Color surface;
 
   /// Elements placed on top of a [surface].
   final Color surfaceRaised;
 
-  /// Hairline borders and dividers.
   final Color border;
 
   final Color textPrimary;
@@ -84,11 +78,9 @@ class AppColors extends ThemeExtension<AppColors> {
   /// Eyebrow labels, placeholders, inactive icons.
   final Color textTertiary;
 
-  /// Primary actions, active states, highlights.
   final Color brand;
   final Color brandSecondary;
 
-  /// Text and icons placed on [brand].
   final Color onBrand;
 
   /// Low-emphasis brand tint (selected backgrounds).

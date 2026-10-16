@@ -1,8 +1,6 @@
 import 'package:coach_app/core/error/failure.dart';
 import 'package:dio/dio.dart';
 
-/// Translates transport-level [DioException]s into domain [Failure]s.
-///
 // TODO(team): align `message` / `errors` keys with the fibodo API error
 // format once the API docs are available.
 abstract final class ApiErrorMapper {

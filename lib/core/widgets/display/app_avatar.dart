@@ -2,7 +2,6 @@ import 'package:coach_app/core/theme/app_spacing.dart';
 import 'package:coach_app/core/utils/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 
-/// Rounded-square avatar showing initials, as used across the design.
 class AppAvatar extends StatelessWidget {
   const AppAvatar({
     required this.initials,

@@ -1,7 +1,3 @@
-/// Design-system components. Import this one file in feature code:
-/// `import 'package:coach_app/core/widgets/widgets.dart';`
-library;
-
 export 'buttons/app_button.dart';
 export 'display/app_avatar.dart';
 export 'display/brand_mark.dart';

@@ -2,8 +2,6 @@ import 'package:coach_app/core/network/api_endpoints.dart';
 import 'package:coach_app/core/storage/auth_tokens.dart';
 import 'package:dio/dio.dart';
 
-/// Exchanges a refresh token for a new token pair.
-///
 /// Uses its own [Dio] instance (no auth interceptor) so a failing refresh
 /// can never trigger another refresh.
 class TokenRefreshClient {

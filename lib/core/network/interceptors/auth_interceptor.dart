@@ -3,8 +3,6 @@ import 'package:coach_app/core/storage/auth_tokens.dart';
 import 'package:coach_app/core/storage/token_storage.dart';
 import 'package:dio/dio.dart';
 
-/// Attaches the access token and transparently refreshes it on `401`.
-///
 /// A [QueuedInterceptor] processes errors one at a time, so when several
 /// requests fail together only the first performs the refresh; the others
 /// see that the stored token changed and simply retry with it.

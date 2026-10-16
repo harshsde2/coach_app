@@ -2,7 +2,6 @@ import 'package:coach_app/core/theme/app_spacing.dart';
 import 'package:coach_app/core/utils/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 
-/// Brand-tinted rounded square holding an icon.
 class IconChip extends StatelessWidget {
   const IconChip({required this.icon, this.size = 40, super.key});
 
@@ -24,7 +23,6 @@ class IconChip extends StatelessWidget {
   }
 }
 
-/// Small uppercase pill on brand colour ("CONFIRMED").
 class AppBadge extends StatelessWidget {
   const AppBadge(this.text, {super.key});
 

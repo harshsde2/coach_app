@@ -4,8 +4,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'session_events.g.dart';
 
-/// Broadcasts session-level events from the network layer.
-///
 /// Lets `core` tell the auth feature that the session ended (refresh token
 /// rejected) without `core` depending on any feature code.
 class SessionEvents {

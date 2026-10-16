@@ -5,7 +5,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'login_controller.g.dart';
 
-/// Submission state of the login form: idle, loading, or error(Failure).
 @riverpod
 class LoginController extends _$LoginController {
   @override

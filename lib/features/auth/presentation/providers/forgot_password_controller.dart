@@ -23,7 +23,6 @@ abstract class ForgotPasswordState with _$ForgotPasswordState {
   }) = _ForgotPasswordState;
 }
 
-/// Drives the 3-step reset flow: email → one-time code → new password.
 @riverpod
 class ForgotPasswordController extends _$ForgotPasswordController {
   @override
@@ -76,10 +75,8 @@ class ForgotPasswordController extends _$ForgotPasswordController {
     }
   }
 
-  /// Back from the code step to correct the email.
   void editEmail() => state = state.copyWith(step: ForgotPasswordStep.email);
 
-  /// Wraps a call with the submitting flag and failure reporting.
   /// Returns `null` if the provider was disposed meanwhile.
   Future<Result<T>?> _run<T>(Future<Result<T>> Function() call) async {
     state = state.copyWith(isSubmitting: true, failure: null);

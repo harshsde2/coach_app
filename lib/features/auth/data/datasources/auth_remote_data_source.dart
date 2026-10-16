@@ -29,7 +29,6 @@ abstract interface class AuthRemoteDataSource {
   Future<void> resetPassword(ResetPasswordRequest request);
 }
 
-/// Real API or mock, depending on `USE_MOCK_API`.
 @Riverpod(keepAlive: true)
 AuthRemoteDataSource authRemoteDataSource(Ref ref) {
   if (ref.watch(appConfigProvider).useMockApi) return AuthMockDataSource();

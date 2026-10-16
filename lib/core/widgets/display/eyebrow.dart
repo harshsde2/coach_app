@@ -1,7 +1,6 @@
 import 'package:coach_app/core/utils/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 
-/// Small uppercase label shown above titles ("YOUR SCHEDULE").
 class Eyebrow extends StatelessWidget {
   const Eyebrow(this.text, {this.color, super.key});
 

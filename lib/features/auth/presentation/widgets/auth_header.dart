@@ -5,7 +5,6 @@ import 'package:coach_app/core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Brand mark + "`TENANT` ACCOUNT" eyebrow + title, shared by auth screens.
 class AuthHeader extends ConsumerWidget {
   const AuthHeader({required this.title, this.subtitle, super.key});
 

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 enum ToastType { success, error, info }
 
 extension AppToast on BuildContext {
-  /// Shows a short, non-blocking message at the bottom of the screen.
   void showToast(String message, {ToastType type = ToastType.info}) {
     final colors = this.colors;
     final (icon, iconColor) = switch (type) {

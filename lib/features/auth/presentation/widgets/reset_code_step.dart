@@ -5,7 +5,6 @@ import 'package:coach_app/core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-/// Step 2 of password reset: enter the emailed one-time code.
 class ResetCodeStep extends StatefulWidget {
   const ResetCodeStep({
     required this.isSubmitting,

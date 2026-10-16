@@ -2,8 +2,6 @@ import 'package:coach_app/core/theme/app_spacing.dart';
 import 'package:coach_app/core/utils/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 
-/// Surface container with the design's border and radius.
-/// Becomes tappable (with ripple) when [onTap] is set.
 class AppCard extends StatelessWidget {
   const AppCard({
     required this.child,

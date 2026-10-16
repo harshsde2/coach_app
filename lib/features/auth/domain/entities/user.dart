@@ -2,7 +2,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user.freezed.dart';
 
-/// The signed-in member.
 @freezed
 abstract class User with _$User {
   const factory User({
@@ -17,7 +16,6 @@ abstract class User with _$User {
 
   String get fullName => '$firstName $lastName'.trim();
 
-  /// Up to two initials for avatars, e.g. "AM".
   String get initials => [firstName, lastName]
       .where((part) => part.isNotEmpty)
       .map((part) => part[0].toUpperCase())

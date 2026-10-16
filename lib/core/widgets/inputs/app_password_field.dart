@@ -2,7 +2,6 @@ import 'package:coach_app/core/utils/extensions/context_extensions.dart';
 import 'package:coach_app/core/widgets/inputs/app_text_field.dart';
 import 'package:flutter/material.dart';
 
-/// [AppTextField] with obscured input and a show/hide toggle.
 class AppPasswordField extends StatefulWidget {
   const AppPasswordField({
     required this.label,

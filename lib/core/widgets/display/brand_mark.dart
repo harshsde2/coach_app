@@ -4,7 +4,6 @@ import 'package:coach_app/core/utils/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// The tenant's logo lockup: initial in a brand square + spaced name.
 class BrandMark extends ConsumerWidget {
   const BrandMark({
     this.size = AppSizes.brandMark,

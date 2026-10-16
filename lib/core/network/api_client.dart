@@ -11,7 +11,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'api_client.g.dart';
 
-/// The app-wide HTTP client used by every remote data source.
 @Riverpod(keepAlive: true)
 Dio apiClient(Ref ref) {
   final config = ref.watch(appConfigProvider);

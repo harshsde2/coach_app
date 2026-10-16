@@ -6,8 +6,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'token_storage.g.dart';
 
-/// Persists the session tokens in secure storage.
-///
 /// Lives in `core` because the network layer needs it to authorise requests.
 class TokenStorage {
   const TokenStorage(this._storage);

@@ -1,5 +1,3 @@
-/// Relative API paths, resolved against `AppConfig.apiBaseUrl`.
-///
 // TODO(team): confirm paths against the fibodo API documentation.
 abstract final class ApiEndpoints {
   static const login = '/auth/login';

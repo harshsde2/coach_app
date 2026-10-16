@@ -1,8 +1,6 @@
 import 'package:coach_app/core/logging/app_logger.dart';
 import 'package:dio/dio.dart';
 
-/// Logs requests and responses in non-production builds.
-///
 /// Logs method, URL and status only: bodies and headers can contain tokens
 /// or personal data and are never written to the log.
 class LoggingInterceptor extends Interceptor {

@@ -5,7 +5,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'auth_response_dto.freezed.dart';
 part 'auth_response_dto.g.dart';
 
-/// Response of login / sign-up.
 @freezed
 abstract class AuthResponseDto with _$AuthResponseDto {
   const factory AuthResponseDto({
@@ -23,7 +22,6 @@ abstract class AuthResponseDto with _$AuthResponseDto {
       AuthTokens(accessToken: accessToken, refreshToken: refreshToken);
 }
 
-/// Response of verifying a password-reset code.
 @freezed
 abstract class VerifyResetCodeResponseDto with _$VerifyResetCodeResponseDto {
   const factory VerifyResetCodeResponseDto({required String resetToken}) =

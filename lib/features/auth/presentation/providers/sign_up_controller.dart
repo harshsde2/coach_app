@@ -5,7 +5,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'sign_up_controller.g.dart';
 
-/// Submission state of the sign-up form: idle, loading, or error(Failure).
 @riverpod
 class SignUpController extends _$SignUpController {
   @override

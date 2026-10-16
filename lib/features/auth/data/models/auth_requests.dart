@@ -2,9 +2,6 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'auth_requests.g.dart';
 
-// Request bodies for the auth endpoints. Serialise-only, so plain
-// json_serializable classes are enough (no freezed needed).
-
 @JsonSerializable(createFactory: false)
 class LoginRequest {
   const LoginRequest({required this.email, required this.password});

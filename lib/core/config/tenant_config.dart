@@ -4,8 +4,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'tenant_config.g.dart';
 
-/// Branding and identity of the coaching business this build is for.
-///
 /// Values come from `--dart-define-from-file=config/tenants/<tenant>.json`,
 /// so one codebase can ship a separately branded app per fibodo business.
 class TenantConfig {
@@ -50,10 +48,8 @@ class TenantConfig {
   final Color brandPrimary;
   final Color brandSecondary;
 
-  /// Foreground colour used on top of [brandPrimary].
   final Color onBrand;
 
-  /// First letter of the business name, used for the brand mark.
   String get initial => name.isEmpty ? '' : name[0].toUpperCase();
 
   static Color _parseHex(String hex) =>

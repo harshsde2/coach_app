@@ -2,8 +2,6 @@ import 'package:coach_app/core/theme/app_spacing.dart';
 import 'package:coach_app/core/widgets/layout/section_heading.dart';
 import 'package:flutter/material.dart';
 
-/// Layout for bottom-tab root screens: eyebrow + title header and a body
-/// that fills the remaining space, scrolling only when it overflows.
 class AppTabPage extends StatelessWidget {
   const AppTabPage({
     required this.title,

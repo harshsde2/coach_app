@@ -1,7 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mocktail/mocktail.dart';
 
-/// In-memory replacement for the Keychain/Keystore in tests.
 class FakeSecureStorage extends Mock implements FlutterSecureStorage {
   final values = <String, String>{};
 

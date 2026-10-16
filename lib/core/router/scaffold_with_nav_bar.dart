@@ -3,8 +3,6 @@ import 'package:coach_app/core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-/// Shell for the bottom-tab section. Each tab keeps its own navigation
-/// stack ([StatefulNavigationShell]), so switching tabs preserves state.
 class ScaffoldWithNavBar extends StatelessWidget {
   const ScaffoldWithNavBar({required this.navigationShell, super.key});
 

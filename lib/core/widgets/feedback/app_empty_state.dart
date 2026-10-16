@@ -3,7 +3,6 @@ import 'package:coach_app/core/utils/extensions/context_extensions.dart';
 import 'package:coach_app/core/widgets/display/icon_chip.dart';
 import 'package:flutter/material.dart';
 
-/// Placeholder for empty lists, errors and not-yet-built sections.
 class AppEmptyState extends StatelessWidget {
   const AppEmptyState({
     required this.icon,
@@ -17,7 +16,6 @@ class AppEmptyState extends StatelessWidget {
   final String title;
   final String message;
 
-  /// Optional call to action, typically an `AppButton`.
   final Widget? action;
 
   @override
